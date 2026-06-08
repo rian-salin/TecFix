@@ -1,0 +1,24 @@
+# Ignorar dependências do Node.js
+**/node_modules/
+node_modules/
+
+# Ignorar arquivos de variáveis de ambiente (credenciais do Supabase)
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+.env
+
+# Ignorar builds de produção
+**/dist/
+dist/
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+**/.DS_Store
+
+# Ignorar o gabarito de referência (para os candidatos não terem acesso)
+solucao-referencia/
+database/
