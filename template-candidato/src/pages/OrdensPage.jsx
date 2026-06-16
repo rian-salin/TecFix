@@ -266,25 +266,25 @@ export default function OrdensPage() {
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             {/* Busca textual */}
-            <div className="relative">
+            <div className="relative sm:w-64">
               <Search
                 size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
+                className="pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-text-muted"
               />
               <input
-                type="search"
+                type="text"
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
                 placeholder="Buscar por cliente ou descrição"
                 aria-label="Buscar ordens de serviço"
-                className="w-full rounded-lg border border-border py-2 pl-9 pr-9 text-sm text-text outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15 sm:w-64"
+                className="w-full rounded-lg border border-border py-2 pl-9 pr-9 text-sm text-text outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
               />
               {busca && (
                 <button
                   type="button"
                   onClick={() => setBusca('')}
                   aria-label="Limpar busca"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text"
+                  className="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-text-muted hover:text-text"
                 >
                   <X size={16} />
                 </button>
