@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import FormInput from '../components/FormInput';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { listClientes, createCliente } from '../services/clientesService';
 import { validarCliente } from '../utils/validators';
 
 const FORM_INICIAL = { nome: '', email: '', telefone: '' };
+const ERRO_CARREGAR = 'Não foi possível carregar os clientes. Tente novamente.';
 
 function formatarData(valor) {
   if (!valor) return '—';
@@ -12,6 +14,7 @@ function formatarData(valor) {
 }
 
 export default function ClientesPage() {
+  const isMobile = useIsMobile();
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
@@ -22,21 +25,39 @@ export default function ClientesPage() {
   const [erroSalvar, setErroSalvar] = useState(null);
   const [sucesso, setSucesso] = useState(null);
 
-  const carregarClientes = useCallback(async () => {
+  // Recarrega a lista a pedido do usuário (botão "tentar novamente" e após cadastrar).
+  const recarregarClientes = useCallback(async () => {
     setLoading(true);
-    setErro(null);
     try {
       setClientes(await listClientes());
+      setErro(null);
     } catch {
-      setErro('Não foi possível carregar os clientes. Tente novamente.');
+      setErro(ERRO_CARREGAR);
     } finally {
       setLoading(false);
     }
   }, []);
 
+  // Carga inicial: feita inline para manter o efeito livre de setState síncrono.
   useEffect(() => {
-    carregarClientes();
-  }, [carregarClientes]);
+    let ativo = true;
+    (async () => {
+      try {
+        const dados = await listClientes();
+        if (ativo) {
+          setClientes(dados);
+          setErro(null);
+        }
+      } catch {
+        if (ativo) setErro(ERRO_CARREGAR);
+      } finally {
+        if (ativo) setLoading(false);
+      }
+    })();
+    return () => {
+      ativo = false;
+    };
+  }, []);
 
   function handleChange(campo) {
     return (e) => {
@@ -62,7 +83,7 @@ export default function ClientesPage() {
       setForm(FORM_INICIAL);
       setErros({});
       setSucesso(`Cliente "${novo.nome}" cadastrado com sucesso.`);
-      await carregarClientes();
+      await recarregarClientes();
     } catch {
       setErroSalvar('Não foi possível cadastrar o cliente. Tente novamente.');
     } finally {
@@ -139,7 +160,7 @@ export default function ClientesPage() {
         ) : erro ? (
           <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
             <span>{erro}</span>
-            <button type="button" onClick={carregarClientes} className="font-semibold underline">
+            <button type="button" onClick={recarregarClientes} className="font-semibold underline">
               Tentar novamente
             </button>
           </div>
@@ -147,6 +168,22 @@ export default function ClientesPage() {
           <p className="rounded-lg border border-border bg-white px-4 py-6 text-center text-sm text-text-muted">
             Nenhum cliente cadastrado ainda.
           </p>
+        ) : isMobile ? (
+          <div className="flex flex-col gap-3">
+            {clientes.map((cliente) => (
+              <div
+                key={cliente.id}
+                className="rounded-xl border border-border bg-white p-4 shadow-sm"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-text">{cliente.nome}</span>
+                  <span className="text-xs text-text-muted">{formatarData(cliente.created_at)}</span>
+                </div>
+                <div className="mt-2 text-sm text-text">{cliente.email}</div>
+                <div className="text-sm text-text-muted">{cliente.telefone}</div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="overflow-hidden rounded-xl border border-border bg-white">
             <table className="w-full text-left text-sm">
