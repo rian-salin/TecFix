@@ -25,11 +25,9 @@
 }
 
 /* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* O preflight do Tailwind v4 já normaliza margens/paddings e box-sizing.
+   Um reset manual com `padding: 0` aqui sobrescreveria as utilidades
+   (pl-9, px-3, py-2, ...) por vir depois na cascata. */
 
 body {
   font-family: var(--font-sans);
