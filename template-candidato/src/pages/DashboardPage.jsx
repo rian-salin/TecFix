@@ -1,9 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
-import { ClipboardList, Loader2 } from 'lucide-react';
+import { CircleDashed, CircleDot, CircleCheck, CircleX, ClipboardList, Loader2 } from 'lucide-react';
 import SummaryCard from '../components/SummaryCard';
 import { getResumoDashboard } from '../services/ordensService';
+import { STATUS_OS, statusToToken } from '../constants/os';
 
 const ERRO_CARREGAR = 'Não foi possível carregar os dados do painel. Tente novamente.';
+
+const STATUS_ICON = {
+  pendente: CircleDashed,
+  andamento: CircleDot,
+  finalizada: CircleCheck,
+  cancelada: CircleX,
+};
+
+const STATUS_ACCENT = {
+  pendente: 'text-status-pendente-text',
+  andamento: 'text-status-andamento-text',
+  finalizada: 'text-status-finalizada-text',
+  cancelada: 'text-status-cancelada-text',
+};
 
 export default function DashboardPage() {
   const [resumo, setResumo] = useState(null);
@@ -68,6 +83,19 @@ export default function DashboardPage() {
             icon={ClipboardList}
             accentClass="text-primary"
           />
+
+          {STATUS_OS.map((status) => {
+            const token = statusToToken[status];
+            return (
+              <SummaryCard
+                key={status}
+                label={status}
+                value={resumo.porStatus[status] ?? 0}
+                icon={STATUS_ICON[token]}
+                accentClass={STATUS_ACCENT[token]}
+              />
+            );
+          })}
         </div>
       )}
     </div>
