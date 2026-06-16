@@ -11,8 +11,10 @@ const navItems = [
 ];
 
 const linkClass = ({ isActive }) =>
-  `cursor-pointer text-sm font-semibold transition-colors ${
-    isActive ? 'text-accent' : 'text-white/80 hover:text-white'
+  `cursor-pointer border-b-2 pb-1 text-sm font-semibold transition-colors ${
+    isActive
+      ? 'border-accent text-accent'
+      : 'border-transparent text-white/80 hover:border-accent/50 hover:text-white'
   }`;
 
 export default function Header() {
