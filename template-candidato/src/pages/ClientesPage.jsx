@@ -67,6 +67,22 @@ export default function ClientesPage() {
     };
   }
 
+  function handleTelefoneChange(e) {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+    let masked = digits;
+    if (digits.length > 10) {
+      masked = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+    } else if (digits.length > 6) {
+      masked = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    } else if (digits.length > 2) {
+      masked = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    } else if (digits.length > 0) {
+      masked = `(${digits}`;
+    }
+    setForm((atual) => ({ ...atual, telefone: masked }));
+    setErros((atual) => ({ ...atual, telefone: undefined }));
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setErroSalvar(null);
@@ -120,8 +136,9 @@ export default function ClientesPage() {
           <FormInput
             id="telefone"
             label="Telefone"
+            type="tel"
             value={form.telefone}
-            onChange={handleChange('telefone')}
+            onChange={handleTelefoneChange}
             error={erros.telefone}
             placeholder="(00) 00000-0000"
           />

@@ -107,12 +107,35 @@ export default function OrdensPage() {
     };
   }
 
+  function handleValorChange(e) {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 13);
+    if (!digits) {
+      setForm((atual) => ({ ...atual, valor: '' }));
+      setErros((atual) => ({ ...atual, valor: undefined }));
+      return;
+    }
+    const centavos = parseInt(digits, 10);
+    const reais = Math.floor(centavos / 100);
+    const cents = centavos % 100;
+    const intFormatado = reais.toLocaleString('pt-BR');
+    const masked = `R$ ${intFormatado},${String(cents).padStart(2, '0')}`;
+    setForm((atual) => ({ ...atual, valor: masked }));
+    setErros((atual) => ({ ...atual, valor: undefined }));
+  }
+
+  function valorParaNumero(valorMascarado) {
+    if (!valorMascarado) return '';
+    const limpo = valorMascarado.replace(/[R$\s.]/g, '').replace(',', '.');
+    return limpo;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setErroSalvar(null);
     setSucesso(null);
 
-    const errosValidacao = validarOrdemServico(form);
+    const formNumerico = { ...form, valor: valorParaNumero(form.valor) };
+    const errosValidacao = validarOrdemServico(formNumerico);
     if (Object.keys(errosValidacao).length > 0) {
       setErros(errosValidacao);
       return;
@@ -120,7 +143,7 @@ export default function OrdensPage() {
 
     setSalvando(true);
     try {
-      await createOrdem(form);
+      await createOrdem(formNumerico);
       setForm(FORM_INICIAL);
       setErros({});
       setSucesso('Ordem de serviço criada com sucesso.');
@@ -227,13 +250,12 @@ export default function OrdensPage() {
             <FormInput
               id="valor"
               label="Valor (R$)"
-              type="number"
-              min="0"
-              step="0.01"
+              type="text"
+              inputMode="numeric"
               value={form.valor}
-              onChange={handleChange('valor')}
+              onChange={handleValorChange}
               error={erros.valor}
-              placeholder="0,00"
+              placeholder="R$ 0,00"
             />
 
             {erroSalvar && (
