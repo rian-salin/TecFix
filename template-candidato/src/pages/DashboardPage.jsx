@@ -28,7 +28,6 @@ export default function DashboardPage() {
   const [erro, setErro] = useState(null);
   const [tentativa, setTentativa] = useState(0);
 
-  // Referência para cancelar o setState caso o componente desmonte durante o fetch.
   const ativoRef = useRef(true);
 
   useEffect(() => {

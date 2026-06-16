@@ -1,10 +1,5 @@
 import { supabase } from '../supabaseClient';
 
-/**
- * Camada de acesso à tabela `clientes` no Supabase.
- * Mantém as queries fora dos componentes (responsabilidade única).
- */
-
 export async function listClientes() {
   const { data, error } = await supabase
     .from('clientes')

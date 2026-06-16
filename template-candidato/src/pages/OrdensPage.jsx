@@ -24,14 +24,11 @@ export default function OrdensPage() {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
 
-  // Filtros (status via re-fetch; busca textual client-side).
   const [filtroStatus, setFiltroStatus] = useState('');
   const [busca, setBusca] = useState('');
 
-  // Atualização inline de status: id da OS sendo atualizada.
   const [atualizandoId, setAtualizandoId] = useState(null);
 
-  // Formulário de criação.
   const [clientes, setClientes] = useState([]);
   const [form, setForm] = useState(FORM_INICIAL);
   const [erros, setErros] = useState({});
@@ -51,7 +48,6 @@ export default function OrdensPage() {
     }
   }, [filtroStatus]);
 
-  // Recarrega a lista sempre que o filtro de status muda.
   useEffect(() => {
     let ativo = true;
     (async () => {
@@ -73,7 +69,6 @@ export default function OrdensPage() {
     };
   }, [filtroStatus]);
 
-  // Carrega clientes para o dropdown do formulário (uma vez).
   useEffect(() => {
     let ativo = true;
     (async () => {
@@ -81,7 +76,6 @@ export default function OrdensPage() {
         const dados = await listClientes();
         if (ativo) setClientes(dados);
       } catch {
-        // Lista de clientes é tratada como vazia em caso de falha.
       }
     })();
     return () => {
@@ -89,7 +83,6 @@ export default function OrdensPage() {
     };
   }, []);
 
-  // Busca textual: filtra a lista já carregada por nome do cliente ou descrição.
   const ordensFiltradas = useMemo(() => {
     const termo = busca.trim().toLowerCase();
     if (!termo) return ordens;
@@ -155,7 +148,6 @@ export default function OrdensPage() {
     }
   }
 
-  // Atualização inline de status com update otimista e rollback em caso de erro.
   async function handleStatusChange(os, novoStatus) {
     if (novoStatus === os.status) return;
     const anterior = os.status;
@@ -167,12 +159,10 @@ export default function OrdensPage() {
 
     try {
       await updateStatusOrdem(os.id, novoStatus);
-      // Se há filtro ativo e o novo status não corresponde, recarrega para refletir.
       if (filtroStatus && filtroStatus !== novoStatus) {
         await recarregarOrdens();
       }
     } catch {
-      // Rollback.
       setOrdens((atual) =>
         atual.map((item) => (item.id === os.id ? { ...item, status: anterior } : item))
       );
@@ -188,7 +178,6 @@ export default function OrdensPage() {
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-text">Ordens de Serviço</h1>
 
-      {/* Formulário de criação */}
       <section className="rounded-xl border border-[#FF6B00] bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-text">Nova ordem de serviço</h2>
 
@@ -282,13 +271,11 @@ export default function OrdensPage() {
         )}
       </section>
 
-      {/* Lista de OS */}
       <section className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-sm font-semibold text-text">Ordens cadastradas</h2>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            {/* Busca textual */}
             <div className="relative sm:w-64">
               <Search
                 size={16}
@@ -314,7 +301,6 @@ export default function OrdensPage() {
               )}
             </div>
 
-            {/* Filtro por status */}
             <StatusSelect
               value={filtroStatus}
               onChange={(e) => setFiltroStatus(e.target.value)}

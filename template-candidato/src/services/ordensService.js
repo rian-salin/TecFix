@@ -1,12 +1,6 @@
 import { supabase } from '../supabaseClient';
 import { STATUS_PENDENTE, STATUS_FINALIZADA, STATUS_OS } from '../constants/os';
 
-/**
- * Camada de acesso à tabela `ordens_servico` no Supabase.
- * Traz o nome do cliente via join (`clientes(nome)`) em uma única query.
- */
-
-// Colunas da OS + nome do cliente associado.
 const SELECT_COM_CLIENTE = '*, clientes(nome)';
 
 export async function listOrdens({ status } = {}) {
@@ -32,7 +26,7 @@ export async function createOrdem({ cliente_id, descricao, valor }) {
         cliente_id,
         descricao: descricao.trim(),
         valor: Number(valor),
-        status: STATUS_PENDENTE, // status inicial sempre 'Pendente'
+        status: STATUS_PENDENTE,
       },
     ])
     .select(SELECT_COM_CLIENTE)
@@ -42,7 +36,6 @@ export async function createOrdem({ cliente_id, descricao, valor }) {
   return data;
 }
 
-// Conta as OS de um status sem trafegar linhas (apenas o cabeçalho com count).
 async function contarPorStatus(status) {
   const { count, error } = await supabase
     .from('ordens_servico')
@@ -53,15 +46,6 @@ async function contarPorStatus(status) {
   return count ?? 0;
 }
 
-/**
- * Agrega as métricas do Dashboard em um único objeto:
- * - total: total de OS cadastradas
- * - porStatus: contagem de OS por status
- * - faturamento: soma de `valor` das OS finalizadas
- *
- * Usa queries separadas com count exato (head: true) para não trafegar linhas,
- * e busca apenas a coluna `valor` das finalizadas para somar.
- */
 export async function getResumoDashboard() {
   const [{ count: total, error: erroTotal }, valoresFinalizadas, ...contagens] =
     await Promise.all([

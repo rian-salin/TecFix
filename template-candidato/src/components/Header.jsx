@@ -15,10 +15,6 @@ const linkClass = ({ isActive }) =>
     isActive ? 'text-accent' : 'text-white/80 hover:text-white'
   }`;
 
-/**
- * Barra de navegação principal da aplicação.
- * Logo + links entre seções; em telas pequenas a navegação vira menu hambúrguer.
- */
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -33,7 +29,6 @@ export default function Header() {
           </span>
         </NavLink>
 
-        {/* Navegação desktop */}
         <nav className="hidden items-center gap-6 sm:flex">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className={linkClass}>
@@ -43,7 +38,6 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          {/* Toggle light/dark */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -53,7 +47,6 @@ export default function Header() {
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          {/* Botão hambúrguer (mobile) */}
           <button
             type="button"
             className="cursor-pointer text-white sm:hidden"
@@ -67,7 +60,6 @@ export default function Header() {
       </div>
       </div>
 
-      {/* Navegação mobile (dropdown) */}
       {open && (
         <nav className="flex flex-col gap-1 border-t border-white/10 px-4 pb-4 sm:hidden">
           {navItems.map((item) => (

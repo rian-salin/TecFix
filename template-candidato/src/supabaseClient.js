@@ -9,7 +9,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Inicializa o cliente do Supabase
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder-url.supabase.co',
   supabaseAnonKey || 'placeholder-key'

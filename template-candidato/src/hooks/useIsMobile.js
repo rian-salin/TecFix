@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
 
-/**
- * Retorna true em telas de celular (< 640px), conforme breakpoint do design system.
- * Usado para alternar layouts (ex.: tabela → cards).
- */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
 

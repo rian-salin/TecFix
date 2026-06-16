@@ -1,9 +1,5 @@
 import { STATUS_OS } from '../constants/os';
 
-/**
- * Select de status reutilizável (filtro e atualização inline).
- * Quando `includeAll` é true, adiciona a opção "Todos" (valor vazio).
- */
 export default function StatusSelect({
   value,
   onChange,

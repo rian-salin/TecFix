@@ -1,10 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 
-/**
- * Estrutura raiz da aplicação: header de navegação + área de conteúdo.
- * As páginas das rotas são renderizadas no <Outlet />.
- */
 export default function Layout() {
   return (
     <div className="min-h-screen bg-surface">

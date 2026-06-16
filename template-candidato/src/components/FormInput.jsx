@@ -1,7 +1,3 @@
-/**
- * Campo de formulário reutilizável: label + input + mensagem de erro.
- * Estilizado com os tokens do design system; aceita qualquer prop nativa de <input>.
- */
 export default function FormInput({ id, label, error, ...inputProps }) {
   return (
     <div className="flex flex-col gap-1">

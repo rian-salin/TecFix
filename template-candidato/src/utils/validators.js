@@ -1,4 +1,3 @@
-// Regex simples para validação de e-mail (suficiente para o cadastro de clientes).
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isRequired(value) {
@@ -9,10 +8,6 @@ export function isEmail(value) {
   return EMAIL_REGEX.test(String(value).trim());
 }
 
-/**
- * Valida os campos do formulário de cliente.
- * Retorna um objeto de erros (campo → mensagem); vazio quando tudo é válido.
- */
 export function validarCliente({ nome, email, telefone }) {
   const erros = {};
 
@@ -33,10 +28,6 @@ export function validarCliente({ nome, email, telefone }) {
   return erros;
 }
 
-/**
- * Valida os campos do formulário de ordem de serviço.
- * Retorna um objeto de erros (campo → mensagem); vazio quando tudo é válido.
- */
 export function validarOrdemServico({ cliente_id, descricao, valor }) {
   const erros = {};
 

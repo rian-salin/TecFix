@@ -26,7 +26,6 @@ export default function ClientesPage() {
   const [erroSalvar, setErroSalvar] = useState(null);
   const [sucesso, setSucesso] = useState(null);
 
-  // Recarrega a lista a pedido do usuário (botão "tentar novamente" e após cadastrar).
   const recarregarClientes = useCallback(async () => {
     setLoading(true);
     try {
@@ -39,7 +38,6 @@ export default function ClientesPage() {
     }
   }, []);
 
-  // Carga inicial: feita inline para manter o efeito livre de setState síncrono.
   useEffect(() => {
     let ativo = true;
     (async () => {
@@ -112,7 +110,6 @@ export default function ClientesPage() {
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-text">Clientes</h1>
 
-      {/* Formulário de cadastro */}
       <section className="rounded-xl border border-[#FF6B00] bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-text">Novo cliente</h2>
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
@@ -166,7 +163,6 @@ export default function ClientesPage() {
         </form>
       </section>
 
-      {/* Lista de clientes */}
       <section>
         <h2 className="mb-3 text-sm font-semibold text-text">Clientes cadastrados</h2>
 
