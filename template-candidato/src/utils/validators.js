@@ -32,3 +32,28 @@ export function validarCliente({ nome, email, telefone }) {
 
   return erros;
 }
+
+/**
+ * Valida os campos do formulário de ordem de serviço.
+ * Retorna um objeto de erros (campo → mensagem); vazio quando tudo é válido.
+ */
+export function validarOrdemServico({ cliente_id, descricao, valor }) {
+  const erros = {};
+
+  if (!isRequired(cliente_id)) {
+    erros.cliente_id = 'Selecione um cliente.';
+  }
+
+  if (!isRequired(descricao)) {
+    erros.descricao = 'Descreva o problema.';
+  }
+
+  const valorNumerico = Number(valor);
+  if (!isRequired(valor)) {
+    erros.valor = 'Informe o valor.';
+  } else if (!Number.isFinite(valorNumerico) || valorNumerico <= 0) {
+    erros.valor = 'Informe um valor maior que zero.';
+  }
+
+  return erros;
+}
