@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import logo from '../assets/logo1.png';
 
 const navItems = [
@@ -14,24 +16,55 @@ const linkClass = ({ isActive }) =>
 
 /**
  * Barra de navegação principal da aplicação.
- * Exibe a logo do sistema e os links entre as seções sobre o azul escuro da marca.
+ * Logo + links entre seções; em telas pequenas a navegação vira menu hambúrguer.
  */
 export default function Header() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-10 bg-primary-dark shadow-sm">
       <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-8">
-        <NavLink to="/" end>
+        <NavLink to="/" end onClick={() => setOpen(false)}>
           <img src={logo} alt="TecFix" className="h-9 w-auto" />
         </NavLink>
 
-        <nav className="flex items-center gap-6">
+        {/* Navegação desktop */}
+        <nav className="hidden items-center gap-6 sm:flex">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className={linkClass}>
               {item.label}
             </NavLink>
           ))}
         </nav>
+
+        {/* Botão hambúrguer (mobile) */}
+        <button
+          type="button"
+          className="text-white sm:hidden"
+          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Navegação mobile (dropdown) */}
+      {open && (
+        <nav className="flex flex-col gap-1 border-t border-white/10 px-4 pb-4 sm:hidden">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={linkClass}
+              onClick={() => setOpen(false)}
+            >
+              <span className="block py-2">{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
