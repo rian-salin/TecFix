@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { CircleDashed, CircleDot, CircleCheck, CircleX, ClipboardList, Loader2 } from 'lucide-react';
+import { CircleDashed, CircleDot, CircleCheck, CircleX, ClipboardList, DollarSign, Loader2 } from 'lucide-react';
 import SummaryCard from '../components/SummaryCard';
 import { getResumoDashboard } from '../services/ordensService';
 import { STATUS_OS, statusToToken } from '../constants/os';
+import { formatBRL } from '../utils/format';
 
 const ERRO_CARREGAR = 'Não foi possível carregar os dados do painel. Tente novamente.';
 
@@ -82,6 +83,13 @@ export default function DashboardPage() {
             value={resumo.total}
             icon={ClipboardList}
             accentClass="text-primary"
+          />
+
+          <SummaryCard
+            label="Faturamento Total"
+            value={formatBRL(resumo.faturamento)}
+            icon={DollarSign}
+            accentClass="text-status-finalizada-text"
           />
 
           {STATUS_OS.map((status) => {
