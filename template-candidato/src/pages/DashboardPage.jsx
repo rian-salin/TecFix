@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { CircleDashed, CircleDot, CircleCheck, CircleX, ClipboardList, DollarSign, Loader2 } from 'lucide-react';
+import { CircleDashed, CircleDot, CircleCheck, CircleX, ClipboardList, DollarSign } from 'lucide-react';
 import SummaryCard from '../components/SummaryCard';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { getResumoDashboard } from '../services/ordensService';
 import { STATUS_OS, statusToToken } from '../constants/os';
 import { formatBRL } from '../utils/format';
@@ -63,12 +64,9 @@ export default function DashboardPage() {
         <p className="mt-1 text-sm text-text-muted">Resumo geral das ordens de serviço.</p>
       </div>
 
-      {loading ? (
-        <div className="flex items-center gap-2 text-sm text-text-muted">
-          <Loader2 size={16} className="animate-spin" />
-          Carregando dados do painel...
-        </div>
-      ) : erro ? (
+      <LoadingOverlay show={loading} label="Carregando dados do painel..." />
+
+      {!loading && erro && (
         <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
           <span>{erro}</span>
           <button
@@ -79,7 +77,9 @@ export default function DashboardPage() {
             Tentar novamente
           </button>
         </div>
-      ) : (
+      )}
+
+      {!loading && !erro && resumo && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <SummaryCard
             label="Total de Ordens de Serviço"
