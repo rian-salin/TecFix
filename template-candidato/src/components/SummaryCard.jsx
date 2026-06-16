@@ -7,7 +7,7 @@ export default function SummaryCard({ label, value, icon: Icon, accentClass = 't
         </span>
       )}
       <p className="text-sm font-medium text-text-muted">{label}</p>
-      <p className="mt-2 text-3xl font-bold text-primary-dark">{value}</p>
+      <p className="mt-2 break-words text-2xl font-bold text-primary-dark sm:text-3xl">{value}</p>
     </div>
   );
 }
