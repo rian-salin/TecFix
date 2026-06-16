@@ -20,6 +20,7 @@ export default function ClientesPage() {
   const [erros, setErros] = useState({});
   const [salvando, setSalvando] = useState(false);
   const [erroSalvar, setErroSalvar] = useState(null);
+  const [sucesso, setSucesso] = useState(null);
 
   const carregarClientes = useCallback(async () => {
     setLoading(true);
@@ -47,6 +48,7 @@ export default function ClientesPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setErroSalvar(null);
+    setSucesso(null);
 
     const errosValidacao = validarCliente(form);
     if (Object.keys(errosValidacao).length > 0) {
@@ -56,9 +58,10 @@ export default function ClientesPage() {
 
     setSalvando(true);
     try {
-      await createCliente(form);
+      const novo = await createCliente(form);
       setForm(FORM_INICIAL);
       setErros({});
+      setSucesso(`Cliente "${novo.nome}" cadastrado com sucesso.`);
       await carregarClientes();
     } catch {
       setErroSalvar('Não foi possível cadastrar o cliente. Tente novamente.');
@@ -104,6 +107,12 @@ export default function ClientesPage() {
           {erroSalvar && (
             <p className="rounded-lg bg-status-cancelada-bg px-3 py-2 text-sm text-status-cancelada-text">
               {erroSalvar}
+            </p>
+          )}
+
+          {sucesso && (
+            <p className="rounded-lg bg-status-finalizada-bg px-3 py-2 text-sm text-status-finalizada-text">
+              {sucesso}
             </p>
           )}
 
