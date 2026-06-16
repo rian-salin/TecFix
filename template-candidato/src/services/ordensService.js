@@ -1,5 +1,5 @@
 import { supabase } from '../supabaseClient';
-import { STATUS_PENDENTE } from '../constants/os';
+import { STATUS_PENDENTE, STATUS_FINALIZADA, STATUS_OS } from '../constants/os';
 
 /**
  * Camada de acesso à tabela `ordens_servico` no Supabase.
@@ -40,6 +40,50 @@ export async function createOrdem({ cliente_id, descricao, valor }) {
 
   if (error) throw error;
   return data;
+}
+
+// Conta as OS de um status sem trafegar linhas (apenas o cabeçalho com count).
+async function contarPorStatus(status) {
+  const { count, error } = await supabase
+    .from('ordens_servico')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', status);
+
+  if (error) throw error;
+  return count ?? 0;
+}
+
+/**
+ * Agrega as métricas do Dashboard em um único objeto:
+ * - total: total de OS cadastradas
+ * - porStatus: contagem de OS por status
+ * - faturamento: soma de `valor` das OS finalizadas
+ *
+ * Usa queries separadas com count exato (head: true) para não trafegar linhas,
+ * e busca apenas a coluna `valor` das finalizadas para somar.
+ */
+export async function getResumoDashboard() {
+  const [{ count: total, error: erroTotal }, valoresFinalizadas, ...contagens] =
+    await Promise.all([
+      supabase.from('ordens_servico').select('*', { count: 'exact', head: true }),
+      supabase.from('ordens_servico').select('valor').eq('status', STATUS_FINALIZADA),
+      ...STATUS_OS.map((status) => contarPorStatus(status)),
+    ]);
+
+  if (erroTotal) throw erroTotal;
+  if (valoresFinalizadas.error) throw valoresFinalizadas.error;
+
+  const porStatus = STATUS_OS.reduce((acc, status, i) => {
+    acc[status] = contagens[i];
+    return acc;
+  }, {});
+
+  const faturamento = (valoresFinalizadas.data ?? []).reduce(
+    (soma, os) => soma + Number(os.valor || 0),
+    0
+  );
+
+  return { total: total ?? 0, porStatus, faturamento };
 }
 
 export async function updateStatusOrdem(id, status) {
