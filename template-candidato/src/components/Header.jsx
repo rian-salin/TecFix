@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import logo from '../assets/logo1.png';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../contexts/useTheme';
 
 const navItems = [
   { to: '/', label: 'Dashboard', end: true },
