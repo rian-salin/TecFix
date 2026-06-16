@@ -251,7 +251,7 @@ export default function OrdensPage() {
             <button
               type="submit"
               disabled={salvando}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {salvando && <Loader2 size={16} className="animate-spin" />}
               {salvando ? 'Salvando...' : 'Criar ordem de serviço'}
@@ -285,7 +285,7 @@ export default function OrdensPage() {
                   type="button"
                   onClick={() => setBusca('')}
                   aria-label="Limpar busca"
-                  className="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-text-muted hover:text-text"
+                  className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer text-text-muted hover:text-text"
                 >
                   <X size={16} />
                 </button>
@@ -307,7 +307,7 @@ export default function OrdensPage() {
         ) : erro ? (
           <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
             <span>{erro}</span>
-            <button type="button" onClick={recarregarOrdens} className="font-semibold underline">
+            <button type="button" onClick={recarregarOrdens} className="cursor-pointer font-semibold underline">
               Tentar novamente
             </button>
           </div>

@@ -10,7 +10,7 @@ const navItems = [
 ];
 
 const linkClass = ({ isActive }) =>
-  `text-sm font-semibold transition-colors ${
+  `cursor-pointer text-sm font-semibold transition-colors ${
     isActive ? 'text-accent' : 'text-white/80 hover:text-white'
   }`;
 
@@ -43,7 +43,7 @@ export default function Header() {
         {/* Botão hambúrguer (mobile) */}
         <button
           type="button"
-          className="text-white sm:hidden"
+          className="cursor-pointer text-white sm:hidden"
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}

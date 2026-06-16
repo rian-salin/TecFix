@@ -141,7 +141,7 @@ export default function ClientesPage() {
           <button
             type="submit"
             disabled={salvando}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {salvando && <Loader2 size={16} className="animate-spin" />}
             {salvando ? 'Salvando...' : 'Cadastrar cliente'}
@@ -158,7 +158,7 @@ export default function ClientesPage() {
         ) : erro ? (
           <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
             <span>{erro}</span>
-            <button type="button" onClick={recarregarClientes} className="font-semibold underline">
+            <button type="button" onClick={recarregarClientes} className="cursor-pointer font-semibold underline">
               Tentar novamente
             </button>
           </div>
