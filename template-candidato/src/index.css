@@ -24,6 +24,26 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
+/* Modo escuro: redefine os tokens quando html.dark está ativo */
+html.dark {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #1a365d;
+  --color-accent: #ff8c42;
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-surface: #0f172a;
+  --color-border: #2d3748;
+
+  --color-status-pendente-bg: #422006;
+  --color-status-pendente-text: #fbbf24;
+  --color-status-andamento-bg: #1e3a5f;
+  --color-status-andamento-text: #93c5fd;
+  --color-status-finalizada-bg: #052e16;
+  --color-status-finalizada-text: #6ee7b7;
+  --color-status-cancelada-bg: #450a0a;
+  --color-status-cancelada-text: #fca5a5;
+}
+
 /* Reset básico */
 /* O preflight do Tailwind v4 já normaliza margens/paddings e box-sizing.
    Um reset manual com `padding: 0` aqui sobrescreveria as utilidades
@@ -34,4 +54,30 @@ body {
   background-color: var(--color-surface);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Cards e seções usam bg-white no markup — em dark mode precisam virar superfície escura */
+html.dark .bg-white {
+  background-color: #1e2837;
+}
+
+html.dark .logo-container {
+  background-color: white;
+}
+
+html.dark .bg-white\/80 {
+  background-color: rgb(15 23 42 / 0.85);
+}
+
+/* Inputs e selects herdam fundo e cor do design system */
+input, select, textarea {
+  background-color: var(--color-bg, #ffffff);
+  color: var(--color-text);
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #1e2837;
+  color: var(--color-text);
 }

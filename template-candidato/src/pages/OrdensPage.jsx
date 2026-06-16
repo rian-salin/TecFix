@@ -163,7 +163,7 @@ export default function OrdensPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold text-primary-dark">Ordens de Serviço</h1>
+      <h1 className="text-2xl font-bold text-text">Ordens de Serviço</h1>
 
       {/* Formulário de criação */}
       <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
@@ -251,7 +251,7 @@ export default function OrdensPage() {
             <button
               type="submit"
               disabled={salvando}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {salvando && <Loader2 size={16} className="animate-spin" />}
               {salvando ? 'Salvando...' : 'Criar ordem de serviço'}

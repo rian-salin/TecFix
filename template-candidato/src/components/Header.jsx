@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import logo from '../assets/logo1.png';
+import { useTheme } from '../contexts/ThemeContext';
 
 const navItems = [
   { to: '/', label: 'Dashboard', end: true },
@@ -20,13 +21,14 @@ const linkClass = ({ isActive }) =>
  */
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-10 bg-primary-dark shadow-sm">
       <div className="flex justify-center px-6 sm:px-12">
       <div className="flex h-16 w-full max-w-5xl items-center justify-between">
         <NavLink to="/" end onClick={() => setOpen(false)}>
-          <span className="flex items-center rounded-xl bg-white px-3 py-1 shadow-md">
+          <span className="logo-container flex items-center rounded-xl bg-white px-3 py-1 shadow-md">
             <img src={logo} alt="TecFix" className="h-11 w-auto" />
           </span>
         </NavLink>
@@ -40,16 +42,28 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Botão hambúrguer (mobile) */}
-        <button
-          type="button"
-          className="cursor-pointer text-white sm:hidden"
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Toggle light/dark */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+            className="cursor-pointer rounded-lg p-2 text-white/80 transition hover:bg-white/10 hover:text-white"
+          >
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+
+          {/* Botão hambúrguer (mobile) */}
+          <button
+            type="button"
+            className="cursor-pointer text-white sm:hidden"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
       </div>
 
