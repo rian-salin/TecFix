@@ -96,7 +96,7 @@ export default function ClientesPage() {
       <h1 className="text-2xl font-bold text-primary-dark">Clientes</h1>
 
       {/* Formulário de cadastro */}
-      <section className="rounded-xl border border-border bg-white p-6 shadow-sm sm:max-w-[480px]">
+      <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-text">Novo cliente</h2>
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
           <FormInput

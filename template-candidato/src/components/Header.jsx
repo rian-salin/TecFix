@@ -23,9 +23,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-10 bg-primary-dark shadow-sm">
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-8">
+      <div className="flex justify-center px-6 sm:px-12">
+      <div className="flex h-16 w-full max-w-5xl items-center justify-between">
         <NavLink to="/" end onClick={() => setOpen(false)}>
-          <img src={logo} alt="TecFix" className="h-9 w-auto" />
+          <span className="flex items-center rounded-xl bg-white px-3 py-1 shadow-md">
+            <img src={logo} alt="TecFix" className="h-11 w-auto" />
+          </span>
         </NavLink>
 
         {/* Navegação desktop */}
@@ -47,6 +50,7 @@ export default function Header() {
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
+      </div>
       </div>
 
       {/* Navegação mobile (dropdown) */}

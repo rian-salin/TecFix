@@ -9,9 +9,11 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-surface">
       <Header />
-      <main className="mx-auto w-full max-w-5xl p-4 sm:p-8">
+      <div className="flex justify-center px-4 py-8 sm:px-8">
+      <main className="w-full max-w-5xl">
         <Outlet />
       </main>
+      </div>
     </div>
   );
 }
