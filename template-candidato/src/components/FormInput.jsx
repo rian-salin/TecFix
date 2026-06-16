@@ -14,7 +14,7 @@ export default function FormInput({ id, label, error, ...inputProps }) {
         className={`rounded-lg border px-3 py-2 text-sm text-text outline-none transition focus:ring-2 ${
           error
             ? 'border-status-cancelada-text focus:ring-status-cancelada-bg'
-            : 'border-border focus:border-primary focus:ring-primary/15'
+            : 'border-border focus:border-[#FF6B00] focus:ring-[#FF6B00]/15'
         }`}
         {...inputProps}
       />

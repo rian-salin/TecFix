@@ -97,7 +97,7 @@ export default function ClientesPage() {
       <h1 className="text-2xl font-bold text-text">Clientes</h1>
 
       {/* Formulário de cadastro */}
-      <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
+      <section className="rounded-xl border border-[#FF6B00] bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-text">Novo cliente</h2>
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
           <FormInput
@@ -141,7 +141,7 @@ export default function ClientesPage() {
           <button
             type="submit"
             disabled={salvando}
-            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {salvando && <Loader2 size={16} className="animate-spin" />}
             {salvando ? 'Salvando...' : 'Cadastrar cliente'}

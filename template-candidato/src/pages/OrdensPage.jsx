@@ -166,7 +166,7 @@ export default function OrdensPage() {
       <h1 className="text-2xl font-bold text-text">Ordens de Serviço</h1>
 
       {/* Formulário de criação */}
-      <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
+      <section className="rounded-xl border border-[#FF6B00] bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-text">Nova ordem de serviço</h2>
 
         {semClientes ? (
@@ -187,7 +187,7 @@ export default function OrdensPage() {
                 className={`rounded-lg border px-3 py-2 text-sm text-text outline-none transition focus:ring-2 ${
                   erros.cliente_id
                     ? 'border-status-cancelada-text focus:ring-status-cancelada-bg'
-                    : 'border-border focus:border-primary focus:ring-primary/15'
+                    : 'border-border focus:border-[#FF6B00] focus:ring-[#FF6B00]/15'
                 }`}
               >
                 <option value="">Selecione um cliente</option>
@@ -216,7 +216,7 @@ export default function OrdensPage() {
                 className={`resize-y rounded-lg border px-3 py-2 text-sm text-text outline-none transition focus:ring-2 ${
                   erros.descricao
                     ? 'border-status-cancelada-text focus:ring-status-cancelada-bg'
-                    : 'border-border focus:border-primary focus:ring-primary/15'
+                    : 'border-border focus:border-[#FF6B00] focus:ring-[#FF6B00]/15'
                 }`}
               />
               {erros.descricao && (
@@ -251,7 +251,7 @@ export default function OrdensPage() {
             <button
               type="submit"
               disabled={salvando}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary-dark px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {salvando && <Loader2 size={16} className="animate-spin" />}
               {salvando ? 'Salvando...' : 'Criar ordem de serviço'}
