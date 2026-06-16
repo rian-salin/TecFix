@@ -3,6 +3,7 @@ import { Loader2, Search, X } from 'lucide-react';
 import FormInput from '../components/FormInput';
 import StatusBadge from '../components/StatusBadge';
 import StatusSelect from '../components/StatusSelect';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { listClientes } from '../services/clientesService';
 import { listOrdens, createOrdem, updateStatusOrdem } from '../services/ordensService';
@@ -302,10 +303,7 @@ export default function OrdensPage() {
         </div>
 
         {loading ? (
-          <div className="flex items-center gap-2 text-sm text-text-muted">
-            <Loader2 size={18} className="animate-spin" />
-            Carregando ordens de serviço...
-          </div>
+          <LoadingOverlay show label="Carregando ordens de serviço..." />
         ) : erro ? (
           <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
             <span>{erro}</span>

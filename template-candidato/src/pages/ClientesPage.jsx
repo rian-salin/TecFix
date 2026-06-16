@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import FormInput from '../components/FormInput';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { listClientes, createCliente } from '../services/clientesService';
 import { validarCliente } from '../utils/validators';
@@ -153,10 +154,7 @@ export default function ClientesPage() {
         <h2 className="mb-3 text-sm font-semibold text-text">Clientes cadastrados</h2>
 
         {loading ? (
-          <div className="flex items-center gap-2 text-sm text-text-muted">
-            <Loader2 size={18} className="animate-spin" />
-            Carregando clientes...
-          </div>
+          <LoadingOverlay show label="Carregando clientes..." />
         ) : erro ? (
           <div className="flex flex-col items-start gap-2 rounded-lg border border-status-cancelada-text/30 bg-status-cancelada-bg px-4 py-3 text-sm text-status-cancelada-text">
             <span>{erro}</span>
